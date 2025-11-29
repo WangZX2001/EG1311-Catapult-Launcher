@@ -1,6 +1,3 @@
-# EG1311-Catapult-Launcher
-The primary goal of this project is to build a self-powered robot that navigates an obstacle course consisting of a starting area, a bump, a ramp, and a wall and then delivers a ping-pong ball over the wall. Extra points are awarded based on the robot’s weight and its capability to reverse back to the starting point.
-
 # EG1311 Catapult Launcher Robot 🚗🏹  
 *A self-powered autonomous robot capable of obstacle traversal and ping-pong ball launching*
 
@@ -71,7 +68,7 @@ The goal was to build an autonomous robot capable of:
 ## 🧠 System Architecture
 
 ### **High-Level Flowchart**
-
+<p align = "center">
 ```mermaid
 flowchart TD
     A[Start] --> B[Measure distance with ultrasonic sensor]
@@ -79,7 +76,7 @@ flowchart TD
     B -->|Distance ≤ 10 cm| D[Stop & Launch Ball]
     D --> E[Reverse for preset duration]
     E --> F[End]
-
+</p>
 ## 🔩 Mechanical Design
 
 ### **Wheels**
