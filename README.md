@@ -1,71 +1,177 @@
-# EG1311 Autonomous Obstacle-Navigating Robot (Team 04)
+# EG1311 Autonomous Robot Project
 
-## 📖 Project Overview
-[cite_start]This repository documents the design and development of a self-powered robot built for the EG1311 course at the National University of Singapore[cite: 1, 4]. [cite_start]The primary objective was to engineer a robot capable of navigating a specific obstacle course—comprising a bump, a ramp, and a wall—and autonomously launching a ping-pong ball over the wall[cite: 14].
+A self-powered robot designed to navigate an obstacle course and deliver a ping-pong ball over a wall using Arduino and mechanical systems.
 
+## 📋 Project Overview
 
-## 🎯 Specifications & Constraints
-The robot was engineered under strict design constraints to ensure competitive fairness and engineering ingenuity:
-* [cite_start]**Dimensions:** The robot fits strictly within a $30 \times 30 \times 30$ cm cubic volume[cite: 36].
-* [cite_start]**Power:** Powered solely by one 9V battery (logic) and four AA batteries (drive)[cite: 37].
-* [cite_start]**Time Limit:** Must complete the course within 30 seconds[cite: 39].
-* [cite_start]**Materials:** Constructed using specific provided materials, including corrugated plastic boards and acrylic[cite: 38, 47].
+This project involves building an autonomous robot that:
+- Navigates through an obstacle course (bump, ramp, and wall)
+- Uses ultrasonic sensors for distance detection
+- Launches a ping-pong ball over a wall using a servo-powered catapult
+- Reverses back to the starting position after ball delivery
 
-## ⚙️ Hardware Architecture
+**Team:** B02 Team 04  
+**Course:** EG1311
 
-### 1. Chassis and Drive System
-* [cite_start]**Body Material:** We utilized corrugated plastic board for the chassis due to its superior structural integrity compared to cardboard, while remaining lightweight[cite: 56].
-* **4-Wheel Drive (4WD):** The robot employs a four-motor design. [cite_start]This ensures multiple contact points for stability and generates sufficient torque to overcome the 3cm bump and climb the ramp[cite: 42, 43].
-* [cite_start]**Wheel Design:** Custom 90mm diameter wheels were laser-cut from acrylic to ensure consistency[cite: 47, 53]. [cite_start]To combat slippage, the wheels were wrapped in anti-slip mats to increase friction against the ground[cite: 175].
+## 🎯 Objectives
 
-### 2. Electronics and Control
-* **Microcontroller:** Arduino Uno.
-* **Motor Drivers:** We utilized **two** L293D H-Bridge motor drivers. [cite_start]This configuration allows independent control of the motors, enabling the robot to move forward, stop, and reverse—a critical feature for the final stage of the course[cite: 126].
-    * *Logic:* Input 1 High / Input 2 Low = Forward. [cite_start]Input 1 Low / Input 2 High = Reverse[cite: 127, 128].
-* [cite_start]**Sensors:** An HC-SR04 Ultrasonic Sensor is used for obstacle detection and distance measurement to the wall[cite: 177].
+### Primary Goals
+- Navigate the complete obstacle course autonomously
+- Successfully deliver a ping-pong ball over the wall
+- Complete the course within 30 seconds
 
+### Bonus Points
+- Minimize robot weight
+- Successfully reverse back to starting position
 
-### 3. Catapult Mechanism
-[cite_start]Instead of a complex elastic latch system, we opted for a direct-drive catapult attached to a servo arm[cite: 92]. [cite_start]This converts the servo's electrical energy directly into the ball's kinetic energy[cite: 93].
-* [cite_start]**Arm Length:** Optimized to 20.25 cm to fit within the dimensional constraints while maximizing trajectory height[cite: 195].
+## 🔧 Specifications & Constraints
 
-## 🧠 Software Logic
+- **Dimensions:** Maximum 30 × 30 × 30 cm³
+- **Power Supply:** 1× 9V battery and 4× AA batteries
+- **Materials:** Limited to provided materials only
+- **Time Limit:** 30 seconds to complete course
 
-The robot operates on a closed-loop system using the ultrasonic sensor for feedback.
+## 🤖 Design Features
 
-1.  **Initialize:** Setup motor pins and servo.
-2.  **Move Forward:** All 4 motors drive the robot forward.
-3.  **Scan:** The ultrasonic sensor measures the distance to the wall.
-4.  **Decision Trigger:**
-    * **IF** distance $< 10$ cm:
-        1.  **Stop:** Cut power to motors.
-        2.  **Launch:** Servo rotates to throw the ball.
-        3.  [cite_start]**Reverse:** Robot backs away to the start[cite: 103, 111, 112].
-    * [cite_start]**ELSE:** Continue moving forward[cite: 104].
+### Hardware Components
 
-## 📐 Design Challenges & Mathematical Solutions
+#### Four-Wheel Drive System
+- **Material:** Laser-cut acrylic wheels
+- **Diameter:** 90mm (to clear bump obstacle)
+- **Traction:** Anti-slip mat wrapping for enhanced grip
+- **Weight Optimization:** Triangular cutouts reduce weight while maintaining structural integrity
 
-### Ramp Clearance (Vehicle Length)
-To ensure the robot did not get stuck at the peak of the ramp, we calculated the maximum allowable length using trigonometry.
-[cite_start]Given a ramp incline of $\theta = 29.74^{\circ}$, the maximum length was determined to be approximately 250mm[cite: 58, 64].
+#### Car Body
+- **Material:** Corrugated plastic board for strength and lightweight properties
+- **Length:** ~250mm (calculated to prevent getting stuck on ramp)
+- **Reinforcement:** Ice cream sticks for additional stability
 
-### Sensor Height Calibration
-[cite_start]During prototyping, the ultrasonic sensor falsely detected the ramp as the wall[cite: 165]. [cite_start]To fix this, we calculated the minimum height required for the sensor to "look over" the ramp using the sensor's $15^{\circ}$ angle of effect[cite: 178].
+#### Motor Configuration
+- **4× DC Motors** powered by 4 AA batteries for maximum torque
+- **2× L293D H-Bridge Motor Drivers** for bidirectional control
+- High current output enables climbing ramp and overcoming obstacles
 
-$$\tan(15^{\circ}) = \frac{h}{175}$$
-$$h \approx 46.89 \text{ mm}$$
+#### Catapult System
+- **Servo-powered launcher** directly attached to servo arm
+- **Arm Length:** 20.25 cm (optimized for trajectory)
+- Converts electrical energy directly to kinetic energy (no rubber band tension)
 
-[cite_start]Adding the ramp height of 100mm, the sensor was mounted at **147mm** from the ground[cite: 185, 186].
+#### Sensors
+- **HC-SR04 Ultrasonic Sensor**
+  - Range: 2-400 cm
+  - Mounted height: 14.7 cm (prevents false triggering from ramp)
+  - Triggers ball launch at 10 cm from wall
 
+### Software Logic
 
-## 📂 Repository Structure
-* `/src`: Contains the final Arduino `.ino` code (see Appendix D of report).
-* `/cad`: DXF and CAD files for the laser-cut acrylic wheels and chassis parts.
-* `/docs`: Project report and circuit diagrams.
+```
+1. Measure distance to wall using ultrasonic sensor
+2. IF distance ≤ 10 cm:
+   - Stop motors
+   - Launch ball with servo
+   - Reverse for set duration
+3. ELSE:
+   - Continue moving forward
+4. Repeat
+```
 
-## 👥 Team
-**NUS EG1311 Group B02 - Team 04**
-* [cite_start]Project Report Authors [cite: 4]
+## 🛠️ Technical Challenges & Solutions
+
+### Challenge 1: Wheel Friction
+- **Problem:** Insufficient grip caused wheels to spin without forward movement
+- **Solution:** Wrapped acrylic wheels with anti-slip mat material
+
+### Challenge 2: Motor Driver Understanding
+- **Problem:** Initial single H-bridge setup only allowed forward movement
+- **Solution:** Implemented 2× L293D drivers for bidirectional motor control
+
+### Challenge 3: Sensor False Triggering
+- **Problem:** Low-mounted ultrasonic sensor detected ramp as obstacle
+- **Solution:** Elevated sensor to 14.7 cm using trigonometric calculations (15° beam angle)
+
+### Challenge 4: Catapult Optimization
+- **Problem:** Finding optimal release angle with minimal energy
+- **Solution:** 20.25 cm arm length provides ideal trajectory near maximum height
+
+## 📐 Key Calculations
+
+### Ramp Clearance
+- Maximum car length calculated using trigonometry to prevent getting stuck at ramp peak
+- Result: 250mm maximum length including wheels
+
+### Sensor Height
+- Calculation based on HC-SR04's 15° detection angle
+- Minimum height: 14.7 cm to avoid ramp detection
+
+## 🔌 Circuit Design
+
+- Arduino microcontroller
+- 2× L293D H-Bridge Motor Drivers
+- 4× DC Motors
+- 1× Servo motor (catapult)
+- 1× HC-SR04 Ultrasonic Sensor
+- Power: 4× AA batteries (motors) + 1× 9V battery
+
+*See Appendix C in project report for complete TinkerCAD circuit diagram*
+
+## 📁 Repository Contents
+
+```
+├── README.md
+├── project-report.pdf          # Full project documentation
+├── arduino-code/
+│   └── robot_control.ino       # Main Arduino program
+├── cad-files/
+│   ├── wheels.dxf
+│   ├── body-structure.dxf
+│   └── complete-assembly.f3d
+└── circuit-diagrams/
+    └── tinkercad-schematic.png
+```
+
+## 🚀 Key Learnings
+
+1. **Iterative Prototyping:** Multiple iterations essential for identifying and solving design flaws
+2. **Constraint-Based Design:** Working within strict material and dimension limits requires creative problem-solving
+3. **Root Cause Analysis:** Systematic troubleshooting prevents hasty conclusions (e.g., faulty breadboard vs. motors)
+4. **Open-Mindedness:** Testing multiple design variations leads to optimal solutions
+5. **Practical Engineering:** Balance between theoretical calculations and real-world testing
+
+## 🏗️ Build Process
+
+1. **Ideation:** Initial concept design and material selection
+2. **CAD Design:** Fusion 360 modeling and laser cutting preparation
+3. **Prototype 1:** Basic template testing - identified friction issues
+4. **Prototype 2:** Motor driver implementation - achieved forward motion
+5. **Prototype 3:** Sensor integration - discovered false triggering
+6. **Final Version:** All improvements integrated and optimized
+
+## 📊 Performance
+
+- Successfully completes obstacle course
+- Accurate ball delivery over wall
+- Reliable reverse navigation to starting position
+- Completion time: <30 seconds
+
+## 👥 Team Contributions
+
+This project was completed collaboratively by Team 04 with contributions across:
+- Mechanical design and CAD modeling
+- Electronics and circuit design
+- Arduino programming
+- Testing and iteration
+- Documentation
+
+## 📝 License
+
+This project was completed as part of the EG1311 course curriculum.
+
+## 🙏 Acknowledgments
+
+- Course instructors and teaching assistants
+- NUS Engineering Design and Innovation Centre
+- Team members for collaborative effort
 
 ---
-*Note: All citations refer to the project report document included in this repository.*
+
+*For detailed technical specifications, calculations, and complete CAD drawings, please refer to the full project report.*
