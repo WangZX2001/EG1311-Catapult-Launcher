@@ -64,15 +64,19 @@ This project involves building an autonomous robot that:
 
 ### Software Logic
 
-```
-1. Measure distance to wall using ultrasonic sensor
-2. IF distance ≤ 10 cm:
-   - Stop motors
-   - Launch ball with servo
-   - Reverse for set duration
-3. ELSE:
-   - Continue moving forward
-4. Repeat
+```mermaid
+flowchart TD
+    A([Start]) --> B[Initialize Sensors & Motors]
+    B --> C[Measure Distance with Ultrasonic Sensor]
+    C --> D{Distance ≤ 10 cm?}
+    D -->|Yes| E[Stop All Motors]
+    E --> F[Activate Servo - Launch Ball]
+    F --> G[Reverse Motors]
+    G --> H[Delay for Set Duration]
+    H --> I[Stop Motors]
+    I --> J([End])
+    D -->|No| K[Move Forward]
+    K --> C
 ```
 
 ## 🛠️ Technical Challenges & Solutions
@@ -118,15 +122,14 @@ This project involves building an autonomous robot that:
 
 ```
 ├── README.md
-├── project-report.pdf          # Full project documentation
-├── arduino-code/
-│   └── robot_control.ino       # Main Arduino program
-├── cad-files/
-│   ├── wheels.dxf
-│   ├── body-structure.dxf
-│   └── complete-assembly.f3d
-└── circuit-diagrams/
-    └── tinkercad-schematic.png
+├── EG1311 Project Report.pdf
+├── final_code.ino
+└── 2D CAD Drawing/
+    ├── EG1311 Ball Holder and Handle ...
+    ├── EG1311 Base Plate and Support...
+    ├── EG1311 Holders Drawing.pdf
+    ├── EG1311 Main Body Drawing.pdf
+    └── EG1311 Wheel Drawing.pdf
 ```
 
 ## 🚀 Key Learnings
