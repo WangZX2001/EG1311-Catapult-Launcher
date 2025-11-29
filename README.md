@@ -10,8 +10,6 @@ This project involves building an autonomous robot that:
 - Launches a ping-pong ball over a wall using a servo-powered catapult
 - Reverses back to the starting position after ball delivery
 
-**Team:** B02 Team 04  
-**Course:** EG1311
 
 ## 🎯 Objectives
 
@@ -125,8 +123,8 @@ flowchart TD
 ├── EG1311 Project Report.pdf
 ├── final_code.ino
 └── 2D CAD Drawing/
-    ├── EG1311 Ball Holder and Handle ...
-    ├── EG1311 Base Plate and Support...
+    ├── EG1311 Ball Holder and Handle Drawing.pdf
+    ├── EG1311 Base Plate and Support Drawing.pdf
     ├── EG1311 Holders Drawing.pdf
     ├── EG1311 Main Body Drawing.pdf
     └── EG1311 Wheel Drawing.pdf
@@ -172,7 +170,7 @@ This project was completed as part of the EG1311 course curriculum.
 ## 🙏 Acknowledgments
 
 - Course instructors and teaching assistants
-- NUS Engineering Design and Innovation Centre
+- NUS College of Design and Engineering
 - Team members for collaborative effort
 
 ---
