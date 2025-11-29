@@ -1,4 +1,4 @@
-# EG1311 Autonomous Robot Project
+# EG1311 Catapult Laucher Robot Project
 
 A self-powered robot designed to navigate an obstacle course and deliver a ping-pong ball over a wall using Arduino and mechanical systems.
 
